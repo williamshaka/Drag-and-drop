@@ -73,6 +73,7 @@ class ProjectList {
 		this.element = <HTMLElement>importedNode.firstElementChild!;
 		this.element.id = `${this.type}-projects`;
 		this.attach();
+		this.renderContent();
 	}
 
 	private renderContent() {
@@ -168,6 +169,7 @@ class ProjectInput {
 		const userInput = this.gatherUserInput();
 		if (Array.isArray(userInput)) {
 			const [title, desc, people] = userInput;
+			console.log(title, desc, people);
 			this.clearInputs();
 		}
 	}
