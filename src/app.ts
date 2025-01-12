@@ -61,6 +61,18 @@ class ProjectState extends State<Project> {
 			ProjectStatus.Active
 		);
 		this.projects.push(newProject);
+		this.updateListeners();
+	}
+
+	moveProject(projectId: string, newStatus: ProjectStatus) {
+		const project = this.projects.find((prj) => prj.id === projectId);
+		if (project && project.status !== newStatus) {
+			project.status = newStatus;
+			this.updateListeners();
+		}
+	}
+
+	private updateListeners() {
 		for (const listenerFn of this.listeners) {
 			listenerFn(this.projects.slice());
 		}
@@ -139,7 +151,7 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
 		newElementId?: string
 	) {
 		this.templateElement = <HTMLTemplateElement>(
-			document.getElementById('project-list')!
+			document.getElementById(templateId)!
 		);
 		this.hostElement = <T>document.getElementById(hostElementId)!;
 		const importedNode = document.importNode(
@@ -231,7 +243,14 @@ class ProjectList
 		}
 	}
 
-	dropHandler(event: DragEvent) {}
+	@autobind
+	dropHandler(event: DragEvent) {
+		const prjId = event.dataTransfer!.getData('text/plain');
+		projectState.moveProject(
+			prjId,
+			this.type === 'active' ? ProjectStatus.Active : ProjectStatus.Finished
+		);
+	}
 
 	@autobind
 	dragLeaveHandler(_: DragEvent) {
