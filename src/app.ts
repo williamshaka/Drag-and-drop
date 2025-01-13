@@ -97,27 +97,31 @@ function validate(validatableInput: Validatable) {
 		isValid = isValid && validatableInput.value.toString().trim().length !== 0;
 	}
 	if (
-		validatableInput.minLength != null &&
+		validatableInput.minLength !== null &&
+		validatableInput.minLength !== undefined &&
 		typeof validatableInput.value === 'string'
 	) {
 		isValid =
 			isValid && validatableInput.value.length > validatableInput.minLength;
 	}
 	if (
-		validatableInput.maxLength != null &&
+		validatableInput.maxLength !== null &&
+		validatableInput.maxLength !== undefined &&
 		typeof validatableInput.value === 'string'
 	) {
 		isValid =
 			isValid && validatableInput.value.length < validatableInput.maxLength;
 	}
 	if (
-		validatableInput.min != null &&
+		validatableInput.min !== null &&
+		validatableInput.min !== undefined &&
 		typeof validatableInput.value === 'number'
 	) {
 		isValid = isValid && validatableInput.value > validatableInput.min;
 	}
 	if (
-		validatableInput.max != null &&
+		validatableInput.max !== null &&
+		validatableInput.max !== undefined &&
 		typeof validatableInput.value === 'number'
 	) {
 		isValid = isValid && validatableInput.value < validatableInput.max;
